@@ -115,6 +115,8 @@ The frontend connects directly to `http://127.0.0.1:8000` via AJAX/Fetch.
 | `/users/` | `GET` | Directory list of all registered users (excluding password) |
 | `/users/update/<id>/` | `PUT` | Updates profile name, email, avatar, or sends typing heartbeat |
 | `/users/delete/<id>/` | `DELETE` | Permanently deletes user profile and associated chat records |
+<img width="959" height="437" alt="image" src="https://github.com/user-attachments/assets/8cc24519-3cec-431c-b013-8820085150a0" />
+
 
 ### Chat Module
 | Endpoint | Method | Payload / Action |
