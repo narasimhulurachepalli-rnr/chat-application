@@ -32,6 +32,8 @@ RealTimeChat/
     ├── dashboard.html        # WhatsApp style sidebar/chat panels & settings modals
     ├── style.css             # Fluid responsive layout & theme variables
     └── script.js             # Client core engine, polling, typing triggers, CRUD helpers
+<img width="947" height="493" alt="image" src="https://github.com/user-attachments/assets/4aad1753-e142-45f0-bf7d-fca922b018e7" />
+
 ```
 
 ---
@@ -47,8 +49,10 @@ RealTimeChat/
 - **In-Browser Image Encoder**: Converted profile image selections into Base64 format for server transmission.
 - **Emoji Picker Grid**: Quick picker inputs popular emojis into messages instantly.
 - **Automatic Form Validation & Toasting**: Informative prompts and alert overlays display process states.
+- 
 
----
+---<img width="953" height="434" alt="image" src="https://github.com/user-attachments/assets/d33c4dae-0d25-41e9-a4cd-9364acfe5dca" />
+
 
 ## Installation & Setups
 
@@ -67,6 +71,8 @@ If you need to change this database path:
 1. Open [config.py](file:///c:/Users/Sivalakshmi/Documents/full%20stack/chat%20application/Backend/config.py).
 2. Modify `MONGO_URI` to point to your new connection string.
 3. Modify `DB_NAME` to specify your collection namespace.
+4. <img width="956" height="505" alt="image" src="https://github.com/user-attachments/assets/75239db0-3ae0-43cf-b291-9f37cc15a441" />
+
 
 ---
 
@@ -117,12 +123,15 @@ The frontend connects directly to `http://127.0.0.1:8000` via AJAX/Fetch.
 | `/chats/` | `GET` | List all global messages sorted chronologically |
 | `/chats/update/<id>/` | `PUT` | Edit message content |
 | `/chats/delete/<id>/` | `DELETE` | Remove message |
+<img width="789" height="377" alt="image" src="https://github.com/user-attachments/assets/a9753585-df4b-42a6-a21a-7dab51ebb764" />
+
 
 ### Conversation Module
 | Endpoint | Method | Payload / Action |
 | :--- | :--- | :--- |
 | `/conversation/?logged_in_user=<username>` | `GET` | Summary list of user's active contacts, last message, and unread counts |
 | `/conversation/<username>/?logged_in_user=<my_username>` | `GET` | Chronological chat history between two users (marks incoming as read) |
+<img width="596" height="401" alt="image" src="https://github.com/user-attachments/assets/0acf5d71-4b17-490d-839b-6b5069396dfc" />
 
 ---
 
@@ -145,3 +154,5 @@ MIT License. Open for development and educational use.
 =======
 # chat-application
 >>>>>>> 79d1c6b63391d5e1755c9c07fcd341170983793a
+>>>>>>> <img width="959" height="441" alt="image" src="https://github.com/user-attachments/assets/e4a78e04-2560-4192-ad7e-d803af9eab41" />
+
