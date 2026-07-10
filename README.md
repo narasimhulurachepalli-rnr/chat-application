@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Real-Time Full Stack Chat Application
 
 A high-performance, real-time chat application built with a **Django 4.2.7 REST API** backend, a **MongoDB Atlas (PyMongo)** database, and an ultra-premium, **Vanilla Glassmorphic HTML5/CSS3/ES6 JavaScript** frontend. 
@@ -141,3 +142,6 @@ Senior Full Stack Developer
 
 ## License
 MIT License. Open for development and educational use.
+=======
+# chat-application
+>>>>>>> 79d1c6b63391d5e1755c9c07fcd341170983793a
