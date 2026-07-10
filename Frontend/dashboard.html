@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - RealTime Chat</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Modals and specific dashboard overlays */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            z-index: 200;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            width: 100%;
+            max-width: 440px;
+            padding: 30px;
+            position: relative;
+        }
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            background: transparent;
+            border: none;
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, #e53935, #c62828);
+            color: var(--text-light);
+            border: none;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition-smooth);
+        }
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(198, 40, 40, 0.3);
+        }
+    </style>
+</head>
+<body class="fade-in">
+
+    <div class="dashboard-container glass-panel">
+        
+        <!-- ==========================================
+             LEFT PANEL (SIDEBAR)
+             ========================================== -->
+        <aside id="sidebar" class="sidebar">
+            
+            <!-- Logged-in User Card -->
+            <div class="user-card">
+                <div class="user-profile">
+                    <div class="avatar-wrapper">
+                        <img id="selfAvatar" class="avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='48' height='48'><rect width='100%' height='100%' fill='%23e1e1e1'/><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z' fill='%238696a0'/></svg>" alt="Self Profile">
+                        <span class="status-dot online"></span>
+                    </div>
+                    <div class="user-details">
+                        <h4 id="selfFullName">Loading User...</h4>
+                        <span id="selfUsername">@username</span>
+                    </div>
+                </div>
+                <div class="user-actions">
+                    <button id="themeToggleBtn" class="icon-btn" title="Toggle Theme">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                    <button id="addContactBtn" class="icon-btn" title="Add Contact">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </button>
+                    <button id="editProfileBtn" class="icon-btn" title="Edit Profile">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </button>
+                    <button id="logoutBtn" class="icon-btn" title="Logout">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Search Users / Chats -->
+            <div class="sidebar-search">
+                <div class="search-wrapper">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search users or conversations...">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+            </div>
+
+            <!-- Available Users / Conversations -->
+            <div id="usersList" class="users-list-container">
+                <!-- User Item placeholder -->
+                <div class="spinner-dark spinner"></div>
+            </div>
+
+        </aside>
+
+        <!-- ==========================================
+             RIGHT PANEL (CHAT WINDOW)
+             ========================================== -->
+        <main id="chatWindow" class="chat-window glass-panel">
+            
+            <!-- Empty State / Welcome Panel -->
+            <div id="welcomePanel" class="welcome-panel">
+                <i class="fa-brands fa-whatsapp"></i>
+                <h3>RealTime Chat Dashboard</h3>
+                <p>Select a contact from the sidebar list to start chatting. You can send messages, utilize emojis, and update/delete sent messages instantly.</p>
+            </div>
+
+            <!-- Active Chat Interface (Hidden by Default) -->
+            <div id="activeChatPanel" style="display: none; flex-direction: column; height: 100%; width: 100%; overflow: hidden;">
+                
+                <!-- Chat Header -->
+                <div class="chat-header">
+                    <div class="chat-partner-info">
+                        <!-- Mobile back button to close chat panel and show sidebar -->
+                        <button id="backToSidebarBtn" class="icon-btn back-sidebar-btn" title="Back to Contacts">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <div class="avatar-wrapper">
+                            <img id="chatPartnerAvatar" class="avatar" src="" alt="Partner Profile">
+                            <span id="chatPartnerStatusDot" class="status-dot"></span>
+                        </div>
+                        <div class="chat-partner-text">
+                            <h4 id="chatPartnerFullName">Contact Name</h4>
+                            <span id="chatPartnerStatusText">offline</span>
+                        </div>
+                    </div>
+                    <div class="chat-header-actions">
+                        <button id="refreshChatBtn" class="icon-btn" title="Force Refresh">
+                            <i class="fa-solid fa-rotate"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Messages Workspace -->
+                <div id="messagesWorkspace" class="messages-workspace">
+                    <!-- Dynamic chat bubbles are rendered here -->
+                </div>
+
+                <!-- Chat Footer (Input Area) -->
+                <div class="chat-footer">
+                    <!-- Emoji Picker Trigger -->
+                    <button id="emojiTrigger" class="icon-btn emoji-trigger" title="Pick Emoji">
+                        <i class="fa-regular fa-face-smile"></i>
+                    </button>
+                    
+                    <!-- Emoji Picker Panel -->
+                    <div id="emojiPicker" class="emoji-picker-pane glass-panel">
+                        <!-- Filled by JS -->
+                    </div>
+
+                    <!-- Input Form -->
+                    <form id="chatInputForm" class="chat-input-form" autocomplete="off">
+                        <div class="chat-input-wrapper">
+                            <input type="text" id="chatInputField" class="chat-input" placeholder="Type a message..." required>
+                        </div>
+                        <button type="submit" class="send-btn btn-animate" title="Send Message">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- ==========================================
+         EDIT PROFILE MODAL
+         ========================================== -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content glass-panel scale-up">
+            <button id="closeProfileModal" class="close-modal">&times;</button>
+            <h3 style="margin-bottom: 20px; text-align: center;">Account Details</h3>
+            
+            <form id="updateProfileForm" novalidate>
+                
+                <!-- Profile Image Edit Preview -->
+                <div class="profile-upload-container">
+                    <div class="profile-preview-wrapper">
+                        <img id="modalAvatarPreview" class="profile-preview" src="" alt="Profile Image">
+                        <label for="modalProfileImage" class="upload-overlay">
+                            <i class="fa-solid fa-camera"></i>
+                            <input type="file" id="modalProfileImage" accept="image/*">
+                        </label>
+                    </div>
+                    <span style="font-size: 0.8rem; color: var(--text-secondary);">Change profile photo</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="modalFullName">Full Name</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="modalFullName" class="form-control" required>
+                        <i class="fa-solid fa-user-tag"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="modalEmail">Email Address</label>
+                    <div class="input-wrapper">
+                        <input type="email" id="modalEmail" class="form-control" required>
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                </div>
+
+                <button type="submit" id="saveProfileBtn" class="btn-primary btn-block btn-animate">
+                    <span>Save Changes</span>
+                </button>
+            </form>
+
+            <hr style="margin: 25px 0; border: 0; border-top: 1px solid var(--card-border);">
+
+            <!-- Danger Zone (Delete Account) -->
+            <div style="text-align: center;">
+                <h4 style="color: #e53935; margin-bottom: 10px;">Danger Zone</h4>
+                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 15px;">Deleting your account will permanently wipe your profile and delete all your chat messages from the servers.</p>
+                <button id="deleteAccountBtn" class="btn-danger">
+                    <i class="fa-solid fa-user-xmark"></i> Delete My Account
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ==========================================
+         ADD CONTACT MODAL
+         ========================================== -->
+    <div id="addContactModal" class="modal">
+        <div class="modal-content glass-panel scale-up">
+            <button id="closeAddContactModal" class="close-modal">&times;</button>
+            <h3 style="margin-bottom: 20px; text-align: center;">Add New Contact</h3>
+            
+            <form id="addContactForm" novalidate>
+                <div class="form-group">
+                    <label for="contactFullName">Full Name</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="contactFullName" class="form-control" placeholder="Enter contact's name" required>
+                        <i class="fa-solid fa-user-tag"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactUsername">Username</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="contactUsername" class="form-control" placeholder="Enter username (lowercase, no spaces)" required>
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactEmail">Email Address</label>
+                    <div class="input-wrapper">
+                        <input type="email" id="contactEmail" class="form-control" placeholder="Enter email address" required>
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                </div>
+
+                <button type="submit" id="submitAddContactBtn" class="btn-primary btn-block btn-animate">
+                    <span>Add Contact</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Container for dynamic Toast notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Core App JS -->
+    <script src="script.js"></script>
+</body>
+</html>

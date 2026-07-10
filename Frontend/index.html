@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RealTime Chat - Connect Instantly</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="fade-in">
+
+    <!-- Header Navigation -->
+    <header class="landing-header glass-panel">
+        <a href="index.html" class="logo">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span>RealTime Chat</span>
+        </a>
+        <button id="themeToggleBtn" class="theme-toggle" title="Toggle Theme">
+            <i class="fa-solid fa-moon"></i>
+        </button>
+    </header>
+
+    <!-- Main Container -->
+    <main class="landing-container">
+        
+        <!-- Hero Section -->
+        <section class="hero-section glass-panel">
+            <div class="hero-content">
+                <h1>Connect, Share & Chat in Real-Time</h1>
+                <p>Experience a modern WhatsApp-inspired interface powered by state-of-the-art web technology. Fast polling, secure profile uploads, message management, and a gorgeous glassmorphism layout tailored for all your devices.</p>
+                <div class="hero-actions">
+                    <a href="login.html" class="btn-primary btn-animate">
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i> Login Now
+                    </a>
+                    <a href="register.html" class="btn-secondary btn-animate">
+                        <i class="fa-solid fa-user-plus"></i> Create Account
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image-container">
+                <i class="fa-regular fa-comments"></i>
+            </div>
+        </section>
+
+        <!-- Features Grid -->
+        <section class="features-section">
+            <h2 class="section-title">Application Features</h2>
+            <div class="features-grid">
+                
+                <!-- Feature 1 -->
+                <div class="feature-card glass-panel btn-animate">
+                    <i class="fa-solid fa-bolt"></i>
+                    <h3>Instant Polling</h3>
+                    <p>Stay up to date. The application automatically fetches new messages every 3 seconds to keep your conversation fluid.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card glass-panel btn-animate">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <h3>Secure Authentication</h3>
+                    <p>Protected dashboard pages and fully hashed passwords prevent unauthorized access to your messages.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card glass-panel btn-animate">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <h3>Message Management</h3>
+                    <p>Made a typo? Update or delete messages directly in the workspace chat bubbles instantly.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card glass-panel btn-animate">
+                    <i class="fa-solid fa-face-smile"></i>
+                    <h3>Emoji Support</h3>
+                    <p>Express yourself easily with our integrated emoji picker and customize your profile with image uploads.</p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 RealTime Chat Inc. Built with Vanilla JS & Django REST. All rights reserved.</p>
+    </footer>
+
+    <!-- Core App JS -->
+    <script src="script.js"></script>
+    <script>
+        // Init landing page interactions
+        document.addEventListener('DOMContentLoaded', () => {
+            // Apply theme on load
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            if (currentTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('themeToggleBtn').innerHTML = '<i class="fa-solid fa-sun"></i>';
+            }
+
+            // Theme toggle button
+            document.getElementById('themeToggleBtn').addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                const isDark = document.body.classList.contains('dark-mode');
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                document.getElementById('themeToggleBtn').innerHTML = isDark ? 
+                    '<i class="fa-solid fa-sun"></i>' : 
+                    '<i class="fa-solid fa-moon"></i>';
+                showToast(isDark ? 'Dark mode enabled' : 'Light mode enabled', 'info');
+            });
+        });
+    </script>
+</body>
+</html>

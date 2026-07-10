@@ -1,0 +1,347 @@
+{
+	"info": {
+		"_postman_id": "8e3ff711-a83a-4efd-ae88-ea9e29a9b7ff",
+		"name": "RealTime Chat API Collection",
+		"description": "Full collection of REST APIs for the Real-Time Chat Application using Django and MongoDB Atlas.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User Module",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"full_name\": \"Alice Cooper\",\n    \"username\": \"alice\",\n    \"email\": \"alice@example.com\",\n    \"password\": \"alicepassword123\",\n    \"profile_image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/register/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"register",
+								""
+							]
+						},
+						"description": "Registers a new user profile. Performs validation for duplicate username, duplicate email, password strength, and required fields. Hashes the password securely."
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"alice\",\n    \"password\": \"alicepassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/login/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"login",
+								""
+							]
+						},
+						"description": "Authenticates user credentials and updates the last_seen status. Returns user metadata on success."
+					},
+					"response": []
+				},
+				{
+					"name": "List Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						},
+						"description": "Fetches a directory list of all registered users (excluding sensitive details like password)."
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"full_name\": \"Alice Cooper Updated\",\n    \"email\": \"alice_new@example.com\",\n    \"profile_image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/update/{{user_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"update",
+								"{{user_id}}",
+								""
+							]
+						},
+						"description": "Updates full name, email, or profile photo for a user. Validates email uniqueness."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/delete/{{user_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"delete",
+								"{{user_id}}",
+								""
+							]
+						},
+						"description": "Permanently deletes a user profile and all associated chat logs."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Chat Module",
+			"item": [
+				{
+					"name": "Send Message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sender\": \"alice\",\n    \"receiver\": \"bob\",\n    \"message\": \"Hey Bob, what's up?\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/chats/send/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"chats",
+								"send",
+								""
+							]
+						},
+						"description": "Sends a message between users, assigning a unique chat UUID, timestamping it, and defaulting read status to false."
+					},
+					"response": []
+				},
+				{
+					"name": "List Chats (Global)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/chats/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"chats",
+								""
+							]
+						},
+						"description": "Lists all global chat messages sorted chronologically."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Message",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"message\": \"Hey Bob, what's up? (Edited)\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/chats/update/{{chat_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"chats",
+								"update",
+								"{{chat_id}}",
+								""
+							]
+						},
+						"description": "Edits the text body of an existing chat bubble."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Message",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/chats/delete/{{chat_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"chats",
+								"delete",
+								"{{chat_id}}",
+								""
+							]
+						},
+						"description": "Deletes a specific chat message from the db."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Conversation Module",
+			"item": [
+				{
+					"name": "List Conversations Summary",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/conversation/?logged_in_user=alice",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"conversation",
+								""
+							],
+							"query": [
+								{
+									"key": "logged_in_user",
+									"value": "alice",
+									"description": "Username of the active logged-in user"
+								}
+							]
+						},
+						"description": "Lists a summary of active chat contacts for the user, listing the last message, timestamp, and unread counts."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Conversation Thread",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/conversation/bob/?logged_in_user=alice",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"conversation",
+								"bob",
+								""
+							],
+							"query": [
+								{
+									"key": "logged_in_user",
+									"value": "alice",
+									"description": "Username of the active logged-in user"
+								}
+							]
+						},
+						"description": "Gets chronological conversation log between Alice and Bob. Automatically updates Bob's sent messages to Alice as read (seen: true)."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": "user-uuid-placeholder",
+			"type": "string"
+		},
+		{
+			"key": "chat_id",
+			"value": "chat-uuid-placeholder",
+			"type": "string"
+		}
+	]
+}

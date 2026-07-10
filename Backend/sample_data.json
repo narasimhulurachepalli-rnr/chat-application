@@ -1,0 +1,50 @@
+{
+  "users": [
+    {
+      "user_id": "4b6c31bf-4b47-4950-86ad-0648c6913c9e",
+      "full_name": "Nandini Rachepalli",
+      "username": "nandini",
+      "email": "nandini@example.com",
+      "password": "pbkdf2_sha256$600000$hZ3b9W1L9k13$8c2a9a8f4c01d9f8c44b9a8f4c01d9f8c44b9a8f4c01d9f8c44b9a8f4c01d9f8",
+      "profile_image": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='100' height='100'><rect width='100%' height='100%' fill='%23128c7e'/><text x='50%' y='55%' font-size='10' fill='white' font-family='sans-serif' text-anchor='middle'>N</text></svg>",
+      "last_seen": "2026-07-10T14:00:00.000Z",
+      "typing_to": ""
+    },
+    {
+      "user_id": "9a38f38d-8a21-4f1e-9277-c99df602bbcc",
+      "full_name": "Sivalakshmi Dev",
+      "username": "siva",
+      "email": "siva@example.com",
+      "password": "pbkdf2_sha256$600000$aK8dB8d2Lq18$2a8f4c01d9f8c44b9a8f4c01d9f8c44b9a8f4c01d9f8c44b9a8f4c01d9f8c44b",
+      "profile_image": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='100' height='100'><rect width='100%' height='100%' fill='%23075e54'/><text x='50%' y='55%' font-size='10' fill='white' font-family='sans-serif' text-anchor='middle'>S</text></svg>",
+      "last_seen": "2026-07-10T14:01:00.000Z",
+      "typing_to": ""
+    }
+  ],
+  "chats": [
+    {
+      "chat_id": "e4b6c31b-4b47-4950-86ad-0648c6913c9e",
+      "sender": "nandini",
+      "receiver": "siva",
+      "message": "Hi Siva! Welcome to our new Real-Time Chat App!",
+      "sent_at": "2026-07-10T14:01:30.000Z",
+      "seen": true
+    },
+    {
+      "chat_id": "7c9df602-8a21-4f1e-9277-c99df602bbcc",
+      "sender": "siva",
+      "receiver": "nandini",
+      "message": "Hello Nandini! Wow, the Glassmorphism WhatsApp UI looks absolutely stunning!",
+      "sent_at": "2026-07-10T14:02:15.000Z",
+      "seen": true
+    },
+    {
+      "chat_id": "d8ffd2ba-4b47-4950-86ad-0648c6913c9e",
+      "sender": "nandini",
+      "receiver": "siva",
+      "message": "I know right? The automated 3-second polling feels super snappy too. Try editing this message!",
+      "sent_at": "2026-07-10T14:03:00.000Z",
+      "seen": false
+    }
+  ]
+}
